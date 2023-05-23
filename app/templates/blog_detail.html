@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+<div class="section">
+  <div class="container">
+    <div style="display: flex; justify-content: center;">
+      {% if messages %}
+
+      {% for message in messages %}
+
+      <h3 {% if message.tags %} class="{{ message.tags }}" {% endif %} style="color:green; font-size: 24px; ">
+        {{message}}</h3>
+
+      {% endfor %}
+
+      {% endif %}
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <div class="mb-5">
+          <h2 class="mb-4" style="line-height:1.5">{{ post.title }}</h2>
+          <span>{{ post.created_at | date:'d M Y' }} <span class="mx-2">/</span>
+          </span>
+
+          <span> <img src="{% static 'eye.png' %}" width="25" alt=""> {% trans 'Просмотров' %}: {{ post.views_count }}
+            <span class="mx-2">/</span>
+          </span>
+          <p class="list-inline-item">{% trans 'Category' %}: <a
+              href="{% url 'blogs_by_category' category_slug=post.category.slug %}" class="ml-1">{{post.category}}</a>
+          </p>
+          
+          
+        </div>
+        <div class="mb-5 text-center">
+          <div class="post-slider slider-sm rounded">
+            {% if post.images.exists %}
+            {% for image in post.images.all %}
+            <img loading="lazy" class="im" decoding="async" style="width: 100%; object-fit: cover;" src="{{ image.image.url }}"
+              alt="Post Thumbnail">
+            {% endfor %}
+            {% else %}
+            <img loading="lazy" class="im" decoding="async" 
+              src="https://image.winudf.com/v2/image/bWUud2FsbHBhcGEubmF0dXJlX3NjcmVlbl8zXzE1MzIzNzgxNjFfMDIw/screen-3.jpg?fakeurl=1&type=.jpg"
+              alt="Post Thumbnail">
+            {% endif %}
+          </div>
+        </div>
+        <div class="content">
+          <p style="white-space: pre-wrap; word-break: break-all; font-size: 18px;">{{post.description}}</p>
+        </div>
+        {% if post.file %}
+        <a href="{% url 'download_file' post.pk %}" class="btn btn-primary">{% trans 'Скачать файл' %}</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .im{
+    height: 800px;
+  }
+  @media screen and (min-width:375px) and (max-width:425px) {
+    .im{
+      height: 350px;
+    }
+  }
+</style>
+
+{% endblock %}

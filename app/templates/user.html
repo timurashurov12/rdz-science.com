@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+<br><br><br>
+<div class="text-center">
+  <h2>{% trans 'Добро пожаловать' %}, {{ user.username }}!</h2>
+  <br><br>
+  
+  <br>
+  <div class="container">
+    <div class="card">
+      <br>
+      <h3>{% trans 'Email' %}: <span class="text-success"> {{ user.email }}</span></h3>
+      <br>
+      <h3>{% trans 'Имя пользователя' %}: <span class="text-success"> {{ user.username }}</span></h3>
+      <br>
+      <h3>{% trans 'Password' %}: **********</h3>
+      <br>
+      <a href="{% url 'edit_user' username=request.user.username %}" class="btn btn-outline-primary text-dark">{% trans 'Change' %}</a>
+    </div>
+  </div>
+  <br><br>
+  {% if messages %}
+
+  {% for message in messages %}
+
+  <h3 {% if message.tags %} class="{{ message.tags }}" {% endif %} style="color:rgb(255, 255, 255); font-size: 24px; background-color: rgb(16, 85, 62); height: 100px; padding-top:30px; ">
+    {{message}}</h3>
+
+  {% endfor %}
+
+  {% endif %}
+</div>
+<br><br><br><br><br>
+
+<div class="text-center">
+  <h2>{% trans 'Ваши статьи' %}</h2>
+  <hr>
+  <br>
+  <ul class="list-inline breadcrumbs text-capitalize" style="font-weight:500">
+    
+    {% if category %}
+    <li class="list-inline-item">Категория: &nbsp; {{ category.name }}</li>
+    {% endif %} 
+    
+  </ul>
+</div>
+<div class="container">
+
+
+  <section class="section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-9">
+          <div class="me-lg-4">
+            <div class="row gy-5">
+              {% if articles %}
+                {% for blog in articles %}
+                  <div class="col-md-6" data-aos="fade">
+                    <article class="blog-post">
+                       <div class="post-slider slider-sm rounded">
+                        {% if blog.images.exists %}
+                        {% for image in blog.images.all %}
+                        <a href="{% url 'blog_detail' pk=blog.pk %}">
+                          <img loading="lazy" decoding="async" class="blog-image"
+                            src="{{ image.image.url }}" alt="image">
+                        </a>
+                        {% endfor %}
+                        {% else %}
+                        <a href="{% url 'blog_detail' pk=blog.pk %}">
+                          <img loading="lazy" decoding="async" class="blog-image"
+                            src="https://image.winudf.com/v2/image/bWUud2FsbHBhcGEubmF0dXJlX3NjcmVlbl8zXzE1MzIzNzgxNjFfMDIw/screen-3.jpg?fakeurl=1&type=.jpg" alt="image">
+                        </a>
+                        {% endif %}
+                      </div>
+                      <div class="pt-4">
+                        <p class="mb-3">{{ blog.created_at | date:'d M Y' }}</p>
+                        <h2 class="h4"><a class="text-black" href="{% url 'blog_detail' pk=blog.pk %}">{{blog.title}}</a></h2>
+                        <p style="white-space: pre-wrap; word-break: break-all;">{{ blog.description | safe | truncatechars:100 }}</p>
+                        <a href="{% url 'blog_detail' pk=blog.pk %}" class="btn btn-outline-primary fw-bold"
+                          aria-label="Read the full article by clicking here">{% trans 'Подробнее' %}</a><br><br>
+                        <a href="{% url 'edit_blog' pk=blog.pk %}" class="btn btn-success fw-bold">{% trans 'Редактировать' %}</a>
+                        <a href="{% url 'delete_record' pk=blog.pk %}" class="btn btn-danger fw-bold">{% trans 'Delete' %}</a>
+                      </div>
+                    </article>
+                  </div>
+                {% endfor %}
+              {% else %}
+                <h1>{% trans 'У вас нет постов' %}</h1>
+                <a href="{% url 'add_post' %}" style="width:300px;" class="btn btn-success">{% trans 'Создать пост' %}</a>
+              {% endif %}
+
+
+              {% if articles.has_other_pages %}
+              <div class="pagination justify-content-center">
+                <nav aria-label="Page navigation">
+                  <ul class="pagination">
+                    {% if articles.has_previous %}
+                    <li class="page-item"><a class="page-link"
+                        href="?page=1{% if current_category_slug %}&category_slug={{ current_category_slug }}{% endif %}">&laquo;</a>
+                    </li>
+                    <li class="page-item"><a class="page-link"
+                        href="?page={{ articles.previous_page_number }}{% if current_category_slug %}&category_slug={{ current_category_slug }}{% endif %}">&lsaquo;</a>
+                    </li>
+                    {% endif %}
+                    {% for num in nums %}
+                    {% if num == '...' %}
+                    <li class="page-item disabled"><a class="page-link" href="#">&hellip;</a></li>
+                    {% else %}
+                    <li class="page-item{% if articles.number == num %} active{% endif %}"><a class="page-link"
+                        href="?page={{ num }}{% if current_category_slug %}&category_slug={{ current_category_slug }}{% endif %}">{{num}}</a>
+                    </li>
+                    {% endif %}
+                    {% endfor %}
+                    {% if articles.has_next %}
+                    <li class="page-item"><a class="page-link"
+                        href="?page={{ articles.next_page_number }}{% if current_category_slug %}&category_slug={{ current_category_slug }}{% endif %}">&rsaquo;</a>
+                    </li>
+                    <li class="page-item"><a class="page-link"
+                        href="?page={{ articles.paginator.num_pages }}{% if current_category_slug %}&category_slug={{ current_category_slug }}{% endif %}">&raquo;</a>
+                    </li>
+                    {% endif %}
+                  </ul>
+                </nav>
+              </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <!-- categories -->
+          <div class="widget widget-categories">
+            <h5 class="widget-title"><span>{% trans 'Категории' %}</span></h5>
+            <ul class="list-unstyled widget-list">
+              <li {% if not current_category_slug %}class="active" {% endif %}>
+                <a href="{% url 'user' user.username %}">{% trans 'All' %}</a>
+              </li>
+              {% for cat in categories %}
+              <li {% if current_category_slug == cat.slug %} class="active" {% endif %}>
+                <a href="{% url 'user_blogs' user.username cat.slug %}">{{ cat.name }}</a>
+              </li>
+              {% endfor %}
+            </ul>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<br><br><br>
+
+{% endblock %}

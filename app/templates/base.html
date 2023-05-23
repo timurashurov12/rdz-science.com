@@ -1,0 +1,236 @@
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- # Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- # CSS Plugins -->
+    <link rel="stylesheet" href="{% static 'plugins/slick/slick.css' %}">
+    <link rel="stylesheet" href="{% static 'plugins/font-awesome/fontawesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'plugins/font-awesome/brands.css' %}">
+    <link rel="stylesheet" href="{% static 'plugins/font-awesome/solid.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Internauka</title>
+    <style>
+        .blog-image{
+          width: 100%;
+          height: 450px;
+        }
+  
+        @media (max-width: 376.99px){
+          .blog-image{
+            width: 100%;
+            height: 280px;
+          }
+        }
+        @media (min-width: 377px) and (max-width: 1025.99px){
+          .blog-image{
+            width: 100%;
+            height: 290px;
+          }
+        }
+      </style>
+</head>
+
+<body>
+    <header class="navigation bg-tertiary  ">
+        <nav class="navbar navbar-expand-xl navbar-light text-center py-3 fixed-top" style="background-color: rgb(255, 253, 253);">
+            <div class="container">
+                <a class="navbar-brand" href="{% url 'home'%}">
+                    <img loading="prelaod" decoding="async" class="img-fluid" width="160"
+                        src="{% static 'images/logo.png' %}" alt="Wallet">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                        <li class="nav-item"> <a class="nav-link" href="{% url 'home'%}">{% trans 'Главная' %}</a>
+                        </li>
+                        <li class="nav-item "> <a class="nav-link" href="#">{% trans 'О нас'%}</a>
+                        </li>
+                        <li class="nav-item "> <a class="nav-link" href="{% url 'blogs' %}">{% trans 'Все статьи' %}</a>
+                        </li>
+                   
+
+
+                    </ul>
+                    
+                    <form action="{% url 'set_language' %}" method="POST">
+                        {% csrf_token %}
+                        <input name="language" class="form-control" type="hidden" value="{{ request.LANGUAGE_CODE }}">
+                      
+                      <select name="language" class="form-control btn btn-outline-primary" onchange="this.form.submit()">
+                            {% get_language_info_list for LANGUAGES as languages %}
+                            {% for language in languages %}
+                            <div class="dropdown-menu">
+                                <option value="{{ language.code }}" class="dropdown-item" {% if language.code == request.LANGUAGE_CODE %}selected{% endif %}>
+                                   {{ language.name_local }} ({{ language.code }})
+                                </option>
+                            </div>
+                            {% endfor %}
+                        </select> 
+                       
+                    </form>
+                  
+                    <form method="GET" action="{% url 'search_result' %}">
+                        <br>    
+                            <input class="form-control me-2" type="search" name="search"  placeholder="{% trans 'Search' %}"
+                                style="width:200px; height: 50px; margin-left:10px;display: inline;" aria-label="Search" value="{{ request.GET.search }}">
+                        <button class="btn btn-outline-primary" type="submit" style="margin-right:10px;">{% trans 'Поиск' %}</button>
+                        <br><br>
+                    </form>
+                    {% if request.user.is_authenticated %}
+                    <ul class="navbar-nav ">
+                        <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+                                role="button" data-bs-toggle="dropdown" aria-expanded="false">{{ user.username }}</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item " href="{% url 'user' username=user.username %}">{% trans 'Профиль' %}</a>
+                                </li>
+                                <li><a class="dropdown-item " href="{% url 'add_post' %}">{% trans 'Добавить статью' %}</a>
+                                </li>
+
+                                <li><a class="dropdown-item text-danger" href="{% url 'logout' %}">{% trans 'Выйти' %}</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    {% else %}
+                    <div>
+                        <a href="{% url 'login' %}" class="btn btn-outline-primary">{% trans 'Войти' %}</a>
+                        <a href="{% url 'register' %}" class="btn btn-primary ms-2 ms-lg-3">{% trans 'Зарегистрироваться' %}</a>
+                    </div>
+                    {% endif %}
+
+                </div>
+            </div>
+        </nav>
+    </header>
+    <br><br><br>
+
+    {% block content %}
+    {% endblock %}
+
+    <footer class="section-sm bg-tertiary">
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="col-lg-2 col-md-4 col-6 mb-4">
+                    <div class="footer-widget">
+                        <h5 class="mb-4 text-primary font-secondary">Service</h5>
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><a href="service-details.html">Personal loans</a>
+                            </li>
+                            <li class="mb-2"><a href="service-details.html">Home Equity Loans</a>
+                            </li>
+                            <li class="mb-2"><a href="service-details.html">Student Loans</a>
+                            </li>
+                            <li class="mb-2"><a href="service-details.html">Mortgage Loans</a>
+                            </li>
+                            <li class="mb-2"><a href="service-details.html">Payday Loans</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-6 mb-4">
+                    <div class="footer-widget">
+                        <h5 class="mb-4 text-primary font-secondary">About</h5>
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><a href="#!">Benefits</a>
+                            </li>
+                            <li class="mb-2"><a href="#!">Careers</a>
+                            </li>
+                            <li class="mb-2"><a href="#!">Our Story</a>
+                            </li>
+                            <li class="mb-2"><a href="#!">Team</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-6 mb-4">
+                    <div class="footer-widget">
+                        <h5 class="mb-4 text-primary font-secondary">Help</h5>
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><a href="contact.html">Contact Us</a>
+                            </li>
+                            <li class="mb-2"><a href="faq.html">FAQs</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12 newsletter-form">
+                    <div style="background-color: #F4F4F4; padding: 35px;">
+                        <h5 class="mb-4 text-primary font-secondary">Подписаться</h5>
+                        <div class="pe-0 pe-xl-5">
+                            <form action="#" method="post" name="mc-embedded-subscribe-form" target="_blank">
+                                {% csrf_token %}
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control shadow-none bg-white border-end-0"
+                                        placeholder="Email"> <span class="input-group-text border-0 p-0">
+                                        <button class="input-group-text border-0 bg-primary" type="submit"
+                                            name="subscribe" aria-label="Subscribe for Newsletter"><i
+                                                class="fas fa-arrow-right"></i></button>
+                                    </span>
+                                </div>
+                                <div style="position: absolute; left: -5000px;" aria-hidden="true">
+                                    <input type="text" name="b_463ee871f45d2d93748e77cad_a0a2c6d074" tabindex="-1">
+                                </div>
+                            </form>
+                        </div>
+                        <p class="mb-0">Узнай первым о новостях издательства</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row align-items-center mt-5 text-center text-md-start">
+                <div class="col-lg-4">
+                    <a href="/">
+                        <img loading="prelaod" decoding="async" class="img-fluid" width="160"
+                            src="{% static 'images/logo.png' %}" alt="Wallet">
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 mt-4 mt-lg-0">
+                    <ul class="list-unstyled list-inline mb-0 text-lg-center">
+                        <li class="list-inline-item me-4"><a class="text-black" href="privacy-policy.html">Privacy
+                                Policy</a>
+                        </li>
+                        <li class="list-inline-item me-4"><a class="text-black" href="terms.html">Terms &amp;
+                                Conditions</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-6 text-md-end mt-4 mt-md-0">
+                    <ul class="list-unstyled list-inline mb-0 social-icons">
+                        <li class="list-inline-item me-3"><a title="Explorer Facebook Profile" class="text-black"
+                                href="https://facebook.com/"><i class="fab fa-facebook-f"></i></a>
+                        </li>
+                        <li class="list-inline-item me-3"><a title="Explorer Twitter Profile" class="text-black"
+                                href="https://twitter.com/"><i class="fab fa-twitter"></i></a>
+                        </li>
+                        <li class="list-inline-item me-3"><a title="Explorer Instagram Profile" class="text-black"
+                                href="https://instagram.com/"><i class="fab fa-instagram"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+   
+    <script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'plugins/bootstrap/bootstrap.min.js' %}"></script>
+    <script src="{% static 'plugins/slick/slick.min.js' %}"></script>
+    <script src="{% static 'plugins/scrollmenu/scrollmenu.min.js' %}"></script>
+
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+
+</html>

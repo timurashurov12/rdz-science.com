@@ -1,0 +1,180 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-05-16 16:24+0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\app\forms.py:19
+msgid "Старый пароль"
+msgstr ""
+
+#: .\app\forms.py:25
+msgid "Новый"
+msgstr ""
+
+#: .\app\forms.py:32
+msgid "Подтвердите новый пароль"
+msgstr ""
+
+#: .\app\forms.py:40
+msgid "Введите email"
+msgstr "Enter email"
+
+#: .\app\forms.py:60 .\app\templates\login.html:24
+#, fuzzy
+#| msgid "Ваш логин"
+msgid "Введите логин"
+msgstr "Your login"
+
+#: .\app\forms.py:65 .\app\templates\login.html:32
+msgid "Введите пароль"
+msgstr ""
+
+#: .\app\forms.py:70
+msgid "Подтвердите пароль"
+msgstr ""
+
+#: .\app\forms.py:86
+#, fuzzy
+#| msgid "Ваш логин"
+msgid "Ваш логин"
+msgstr "Your login"
+
+#: .\app\forms.py:90
+#, fuzzy
+#| msgid "Введите email"
+msgid "Ваш email"
+msgstr "Enter email"
+
+#: .\app\forms.py:100
+msgid "Rasmni tanlang"
+msgstr ""
+
+#: .\app\forms.py:101
+msgid "Fayl tanlanmagan"
+msgstr ""
+
+#: .\app\forms.py:103
+msgid "Choose image"
+msgstr "Choose your file"
+
+#: .\app\forms.py:104
+msgid "No file selected"
+msgstr ""
+
+#: .\app\forms.py:106
+msgid "Выберите изображение"
+msgstr "Choose your file"
+
+#: .\app\forms.py:107
+msgid "Не выбран ни один файл"
+msgstr "no file chosed"
+
+#: .\app\forms.py:124 .\app\forms.py:131
+#, fuzzy
+#| msgid "Ваш логин"
+msgid "Введите название"
+msgstr "Your login"
+
+#: .\app\templates\add_post.html:8
+msgid "Создать статью"
+msgstr ""
+
+#: .\app\templates\add_post.html:16 .\app\templates\change_blog.html:16
+msgid "Все поля должны быть заполнены!"
+msgstr ""
+
+#: .\app\templates\add_post.html:25 .\app\templates\change_blog.html:25
+msgid "Название"
+msgstr ""
+
+#: .\app\templates\add_post.html:32 .\app\templates\change_blog.html:32
+msgid "Описание"
+msgstr ""
+
+#: .\app\templates\add_post.html:41 .\app\templates\change_blog.html:41
+msgid "Загрузите картинку"
+msgstr ""
+
+#: .\app\templates\add_post.html:48 .\app\templates\change_blog.html:48
+#, fuzzy
+#| msgid "Ваш логин"
+msgid "Выберите категорию"
+msgstr "Your login"
+
+#: .\app\templates\add_post.html:55
+msgid "Создать"
+msgstr ""
+
+#: .\app\templates\base.html:40
+msgid "Главная"
+msgstr "Main"
+
+#: .\app\templates\change_blog.html:8
+msgid "Изменить статью"
+msgstr ""
+
+#: .\app\templates\change_blog.html:55
+msgid "Cохранить"
+msgstr ""
+
+#: .\app\templates\change_password.html:42 .\app\templates\register.html:59
+msgid "Пароли не совпадают"
+msgstr ""
+
+#: .\app\templates\login.html:8
+msgid "Вход"
+msgstr ""
+
+#: .\app\templates\login.html:16
+msgid "Неправильно введен логин или пароль"
+msgstr ""
+
+#: .\app\templates\login.html:22 .\app\templates\register.html:40
+#, fuzzy
+#| msgid "Ваш логин"
+msgid "Логин"
+msgstr "Your login"
+
+#: .\app\templates\login.html:29 .\app\templates\register.html:46
+msgid "Пароль"
+msgstr ""
+
+#: .\app\templates\login.html:37
+msgid "Войти"
+msgstr ""
+
+#: .\app\templates\register.html:8
+msgid "Регистрация"
+msgstr ""
+
+#: .\app\templates\register.html:17
+msgid ""
+"Ошибка при регистрации. Пожалуйста, проверьте данные и повторите попытку"
+msgstr ""
+
+#: .\app\templates\register.html:37
+msgid "Такой логин уже существует"
+msgstr ""
+
+#: .\app\templates\register.html:52
+msgid "Повторите Пароль"
+msgstr ""
+
+#: .\app\templates\register.html:62
+msgid "Зарегистрироваться"
+msgstr ""
