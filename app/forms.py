@@ -4,7 +4,7 @@ from django import forms
 from django.utils.translation import gettext_lazy as _
 from .models import Blog, Category
 from django import forms
-  
+from ckeditor.widgets import CKEditorWidget
 
 class CustomPasswordChangeForm(PasswordChangeForm):
     old_password = forms.CharField(
@@ -16,7 +16,7 @@ class CustomPasswordChangeForm(PasswordChangeForm):
     new_password1 = forms.CharField(
         widget=forms.PasswordInput(attrs={
             'class': 'form-control',
-            'placeholder': _('Новый'),
+            'placeholder': _('Новый пароль'),
             }),
         
     )
@@ -79,9 +79,9 @@ class ArticleForm(forms.ModelForm):
         required=True,
     )
     description = forms.CharField(
-        widget=forms.Textarea(attrs={
+        widget=CKEditorWidget(attrs={
             'class': 'form-control',
-            'placeholder': _("Введите название"),
+            'placeholder': _("Введите описание"),
             'required': True,
         }),
         required=True

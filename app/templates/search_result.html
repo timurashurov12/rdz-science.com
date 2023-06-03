@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load i18n %}
+{% load bleach_tags %}
 {% block content %} 
 <br><br><br>
 <div class="container">
@@ -40,7 +41,7 @@
                       <h2 class="h4"><a class="text-black" style="word-break: break-all;"
                           href="{% url 'blog_detail' pk=blog.pk %}">{{blog.title |truncatechars:50 }}</a>
                       </h2>
-                      <p style="white-space: pre-wrap; word-break: break-all;">{{blog.description|truncatechars:100 }}</p>
+                      <p style="white-space: pre-wrap; word-break: break-all;">{{ blog.description | bleach_clean:50 | safe }}</p>
                         
                       <a href="{% url 'blog_detail' pk=blog.pk %}" class="btn btn-outline-primary fw-bold" aria-label="Read the full article by clicking here">{% trans 'Подробнее' %}</a>
   
@@ -97,7 +98,7 @@
             <h5 class="widget-title"><span>{% trans 'Категории' %}</span></h5>
             <ul class="list-unstyled widget-list">
               <li {% if not current_category_slug %}class="active" {% endif %}>
-                <a href="{% url 'blogs' %}">Все</a>
+                <a href="{% url 'blogs' %}">{% trans 'Все' %}</a>
               </li>
               {% for cat in categories %}
               <li {% if current_category_slug == cat.slug %}class="active" {% endif %}>
@@ -111,8 +112,9 @@
           </div>
   
           <div class="widget">
-            <h5 class="widget-title"><span>{% trans 'Последние стати' %}</span></h5>
+            <h5 class="widget-title"><span>{% trans 'Последние статьи' %}</span></h5>
             <!-- post-item -->
+            
             {% for blog in latest_blogs %}
             <ul class="list-unstyled widget-list">
               <li class="d-flex widget-post align-items-center">

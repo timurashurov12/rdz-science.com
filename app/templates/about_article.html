@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load bleach_tags %}
+{% block content %}
+
+<div class="section">
+  <div class="container">
+    <h2>{% trans 'Требования к оформлению статьи' %}  "{{req.name_article}}"</h2>
+    <br><br>
+    
+    <div  >
+      <ul style="list-style-type: none; ">
+        {% if req.min_volume%}
+        <li style="font-size: 100%;"><span style="font-size:18px;color:black;font-weight: bold;">{% trans 'Минимальный объем статьи:' %} </span> {{req.min_volume}} </li>
+        {% endif %}
+        {% if req.font%}
+        <li style="font-size: 100%;"><span style="font-size:18px;color:black;font-weight: bold;"> {% trans 'Шрифт:' %} </span> {{req.font}}</li>
+        {% endif %}
+        {% if req.font_size%}
+        <li style="font-size: 100%;"><span style="font-size:18px;color:black;font-weight: bold;"> {% trans 'Размер шрифта:' %} </span> {{req.font_size}} </li>
+        {% endif %}
+        {% if req.line_spacing%}
+        <li style="font-size: 100%;"><span style="font-size:18px;color:black;font-weight: bold;"> {% trans 'Междустрочный интервал:' %} </span> {{req.line_spacing}}</li>
+        {% endif %}
+        {% if req.margins%}
+        <li style="font-size: 100%;"><span style="font-size:18px;color:black;font-weight: bold;"> {% trans 'Поля:' %} </span> {{req.margins}}</li>
+        {% endif %}
+        {% if req.journal_languages%}
+        <li style="font-size: 100%;"><span style="font-size:18px;color:black;font-weight: bold;"> {% trans 'Языки журнала:' %} </span> {{req.journal_languages}}</li>
+        {% endif %}
+        <br>
+      </ul>
+     
+      <h3> Структура статьи </h3>
+      <ol class="structure">
+        {% if req.header_title  %}
+        <li> <span class="olispan" style="font-size:20px;color:black;">{% trans 'Заголовок/название статьи:' %} </span> <span class="olispan2">{{req.header_title | linebreaksbr}}</span></li>
+        {% endif %}
+        {% if req.author_name %}
+        <li> <span class="olispan" style="font-size:20px;color:black;">{% trans 'ФИО автора:'%} </span> <span class="olispan2">{{req.author_name | linebreaksbr}}</span></li>
+        {% endif %}
+        {% if req.student_info %}
+        <li> <span class="olispan" style="font-size:20px;color:black;">{% trans 'Ученое звание, ученая степень, ВУЗ, страна, город:' %} </span> <span class="olispan2">{{req.student_info | linebreaksbr  }}</span></li>
+        {% endif %}
+        {% if req.supervisor %}
+        <li> <span class="olispan" style="font-size:20px;color:black;">{% trans 'Научный руководитель:' %} </span> <span class="olispan2">{{req.supervisor | linebreaksbr  }}</span></li>
+        {% endif %}
+        {% if req.annotation %}
+        <li> <span class="olispan" style="font-size:20px;color:black;">{{req.annotation | linebreaksbr}}</span></li>
+        {% endif %}
+        {% if req.key_words %}
+        <li> <span class="olispan" style="font-size:20px;color:black;">{{req.key_words | linebreaksbr}}</span></li>
+        {% endif %}
+        {% if req.article_text %}
+        <li> <span class="olispan" style="font-size:20px;color:black;">{{req.article_text | linebreaksbr}} </span></li>
+        {% endif %}
+        {% if req.bibliography %}
+        <li> <span class="olispan" style="font-size:20px;color:black;">{{req.bibliography | linebreaksbr  }}</span></li>
+        {% endif %}
+      </ol> 
+        <br>
+        <h5 style="font-weight: 100;"> <span style="font-weight: bold;">{% trans 'Статья не должна:' %}</span> {% trans 'быть ранее опубликована, а также представлена для рассмотрения и публикации в другом издании.' %}</h5> <br>
+        <h5 style="font-weight: 100;"><span style="font-weight: bold;">{% trans 'Запрещается:' %}</span> {% trans 'использовать способы для обхода антиплагиата: слова-формулы, замену русских букв латинскими и т.д.' %}
+         {% trans 'Данные нарушения выявляются с помощью программного обеспечения и статья возвращается на доработку ' %}</h5>
+      
+    </div>
+<br><br><br>
+  
+{% if req.instruction %}
+<a href="{% url 'download_instruction' req.pk %}" class="btn btn-primary">{% trans 'Скачать файл' %}
+<img src="https://www.internauka.org/images/doc-big.png" alt=""><br><br> {% trans 'Скачать образец оформления' %}</a>
+</a>
+{% endif %}  
+</div>
+ </div>
+<style>
+  ol li {
+    color: black;
+    font-size: 20px;
+  }
+
+  .olispan {
+    font-weight: bold;
+  }
+
+  .olispan2{
+    font-size: 17px;
+  }
+</style>
+
+{% endblock %}
+
+  

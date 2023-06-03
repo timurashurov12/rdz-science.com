@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Blog, Category, MultipleImage
+from .models import Blog, Category, MultipleImage, Article
 from modeltranslation.admin import TranslationAdmin
 from django.utils.safestring import mark_safe
 from django import forms
@@ -46,7 +46,7 @@ class MultipleImageInline(admin.TabularInline):
 
 @admin.register(Blog)
 class BlogAdmin(TranslationAdmin):
-    list_display = ("title_ru", "title_uz", "title_en", "user",)
+    list_display = ("title_ru", "title_uz", "title_en", "user","approved")
     inlines = [MultipleImageInline]
 
 
@@ -60,3 +60,6 @@ class CategoryAdmin(TranslationAdmin):
 admin.site.register(MultipleImage)
 
 
+@admin.register(Article)
+class ArticleAdmin(TranslationAdmin):
+    list_display = ("name_article_ru", "name_article_uz", "name_article_en")

@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Blog, Category, MultipleImage
+from .models import Blog, Category, MultipleImage, Article
 from django.contrib.auth.models import User
 from django.contrib.auth import update_session_auth_hash
 from .forms import SignUpForm, ArticleForm, CustomUserChangeForm, CustomPasswordChangeForm
@@ -15,6 +15,9 @@ from django.contrib.auth.decorators import login_required
 import os
 from django.conf import settings
 from django.utils.translation import gettext_lazy as _
+from django.urls import reverse
+
+
 
 def download_file(request, pk):
     post = get_object_or_404(Blog, pk=pk)
@@ -27,19 +30,43 @@ def download_file(request, pk):
             return response
     raise Http404
 
+def download_instruction(request, pk):
+    model_instance = get_object_or_404(Article, pk=pk)
+    file_path = os.path.join(settings.MEDIA_ROOT, str(model_instance.instruction))
+    
+    if os.path.exists(file_path):
+        with open(file_path, 'rb') as fh:
+            response = HttpResponse(fh.read(), content_type="application/octet-stream")
+            response['Content-Disposition'] = 'attachment; filename=' + os.path.basename(file_path)
+            return response
+    raise Http404
+
 def home(request):
-    popular_blogs = Blog.objects.order_by('-views_count')[:4]
+    requirements = Article.objects.all()
+    popular_blogs = Blog.objects.filter(approved=True).order_by('-views_count')[:4]
     context = {
-        'popular_blogs': popular_blogs
+        'popular_blogs': popular_blogs,
+        'reqs': requirements
     }
-    return render(request,'home.html', context)
+    return render(request, 'home.html', context)
+
+
+
+
+
+def about_article(request, id):
+    req = get_object_or_404(Article, id=id)
+    context = {
+        'req': req
+    }
+    return render(request, 'about_article.html', context)
 
 
 def blogs_view(request, category_slug=None):
     categories = Category.objects.all()
-    latest_blogs = Blog.objects.order_by('-created_at')[:3]
-    blogs = Blog.objects.order_by('-created_at')
-    category = None #
+    latest_blogs = Blog.objects.filter(approved=True).order_by('-created_at')[:3]
+    blogs = Blog.objects.filter(approved=True).order_by('-created_at')
+    category = None
     if category_slug:
         category = get_object_or_404(Category, slug=category_slug)
         blogs = blogs.filter(category=category)
@@ -52,10 +79,11 @@ def blogs_view(request, category_slug=None):
         'nums': nums,
         'pages': pages,
         'categories': categories,
-        'current_category_slug': category_slug, # добавляем текущий слаг категории
-        'category': category 
+        'current_category_slug': category_slug,
+        'category': category
     }
     return render(request, 'blog.html', context)
+
 
 def blog_detail(request, pk):
     post = get_object_or_404(Blog, pk=pk)
@@ -102,20 +130,22 @@ def user_view(request, username, category_slug=None):
 def search_result(request):
     query = request.GET.get('search')
     if query:
-        # blogs = Blog.objects.filter(Q(title__icontains=query) | Q(description__icontains=query)) если в ru и кто-то добавил пост из url то будешь находить только те
         current_language = mt_settings.DEFAULT_LANGUAGE
-        blogs = Blog.objects.filter(Q(**{'title_%s__icontains' % current_language: query}) | Q(**{'description_%s__icontains' % current_language: query})).order_by('-created_at') #независит от языка
+        blogs = Blog.objects.filter(approved=True).filter(
+            Q(**{'title_%s__icontains' % current_language: query}) |
+            Q(**{'description_%s__icontains' % current_language: query})
+        ).order_by('-created_at')
 
         p = Paginator(blogs, 6, orphans=0, allow_empty_first_page=True)
         page = request.GET.get('page')
         pages = p.get_page(page)
         nums = pages.paginator.get_elided_page_range(number=pages.number, on_each_side=2, on_ends=1)
     else:
-        blogs = Blog.objects.all()
+        blogs = Blog.objects.filter(approved=True)
         pages = None
         nums = None
     categories = Category.objects.all()
-    latest_blogs = Blog.objects.order_by('-created_at')[:3]
+    latest_blogs = Blog.objects.filter(approved=True).order_by('-created_at')[:3]
 
     context = {
         'blogs': blogs,
@@ -127,6 +157,7 @@ def search_result(request):
     }
 
     return render(request, 'search_result.html', context)
+
 
 def register(request):
     if request.method == 'POST':
@@ -207,6 +238,7 @@ def add_post(request):
         if form.is_valid():
             blog = form.save(commit=False)
             blog.user = request.user
+            blog.approved = False  # Set approved to False
             blog.save()
 
             # get the list of image files
@@ -216,8 +248,8 @@ def add_post(request):
             for image in images:
                 MultipleImage.objects.create(blog=blog, image=image)
 
-            messages.success(request, _('Ваш пост успешно добавлен!'))
-            return redirect('blogs')
+            messages.success(request, _('Ваш пост успешно добавлен и ожидает проверку администратора!'))
+            return redirect(reverse('user', args=[request.user.username]))
         else:
             messages.error(request, '')
     else:

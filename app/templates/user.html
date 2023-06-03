@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load i18n %}
+{% load bleach_tags %}
+
 {% block content %}
 <br><br><br>
 <div class="text-center">
@@ -41,7 +43,7 @@
   <ul class="list-inline breadcrumbs text-capitalize" style="font-weight:500">
     
     {% if category %}
-    <li class="list-inline-item">Категория: &nbsp; {{ category.name }}</li>
+    <li class="list-inline-item">{% trans 'Категория:' %} &nbsp; {{ category.name }}</li>
     {% endif %} 
     
   </ul>
@@ -76,8 +78,20 @@
                       </div>
                       <div class="pt-4">
                         <p class="mb-3">{{ blog.created_at | date:'d M Y' }}</p>
+                        {% if blog.approved == True %}
+                        <p class="mb-3 " style="background-color: green; text-align: center; color:white;font-size:20px;"   >{% trans 'Опубликовано' %}</p>
+                        <style>
+                           
+                        </style>
+                        {% else %}
+                        <p class="mb-3  " style="background-color: red; text-align: center; color:white;font-size:20px;">{% trans 'Проверка...' %}</p>
+                        {% endif %}
+                        <p class="mb-3"><img src="{% static 'eye.png' %}" width="25" alt=""> {% trans 'Просмотров' %}: {{ blog.views_count }} </p>
+
+                       
+
                         <h2 class="h4"><a class="text-black" href="{% url 'blog_detail' pk=blog.pk %}">{{blog.title}}</a></h2>
-                        <p style="white-space: pre-wrap; word-break: break-all;">{{ blog.description | safe | truncatechars:100 }}</p>
+                        <p style="white-space: pre-wrap; word-break: break-all;">{{ blog.description | bleach_clean:50 | safe }}</p>
                         <a href="{% url 'blog_detail' pk=blog.pk %}" class="btn btn-outline-primary fw-bold"
                           aria-label="Read the full article by clicking here">{% trans 'Подробнее' %}</a><br><br>
                         <a href="{% url 'edit_blog' pk=blog.pk %}" class="btn btn-success fw-bold">{% trans 'Редактировать' %}</a>
@@ -134,7 +148,7 @@
             <h5 class="widget-title"><span>{% trans 'Категории' %}</span></h5>
             <ul class="list-unstyled widget-list">
               <li {% if not current_category_slug %}class="active" {% endif %}>
-                <a href="{% url 'user' user.username %}">{% trans 'All' %}</a>
+                <a href="{% url 'user' user.username %}">{% trans 'Все' %}</a>
               </li>
               {% for cat in categories %}
               <li {% if current_category_slug == cat.slug %} class="active" {% endif %}>

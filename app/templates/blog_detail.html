@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load i18n %}
+
 {% block content %}
 <div class="section">
   <div class="container">
@@ -26,7 +27,7 @@
           <span> <img src="{% static 'eye.png' %}" width="25" alt=""> {% trans 'Просмотров' %}: {{ post.views_count }}
             <span class="mx-2">/</span>
           </span>
-          <p class="list-inline-item">{% trans 'Category' %}: <a
+          <p class="list-inline-item">{% trans 'Категория' %}: <a
               href="{% url 'blogs_by_category' category_slug=post.category.slug %}" class="ml-1">{{post.category}}</a>
           </p>
           
@@ -47,7 +48,7 @@
           </div>
         </div>
         <div class="content">
-          <p style="white-space: pre-wrap; word-break: break-all; font-size: 18px;">{{post.description}}</p>
+          <p style="white-space: pre-wrap; word-break: break-all; font-size: 18px;">{{post.description | safe}}</p>
         </div>
         {% if post.file %}
         <a href="{% url 'download_file' post.pk %}" class="btn btn-primary">{% trans 'Скачать файл' %}</a>

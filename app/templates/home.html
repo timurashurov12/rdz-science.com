@@ -1,16 +1,15 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load i18n %}
+{% load bleach_tags %}
 {% block content %}
 <section class="banner bg-tertiary position-relative overflow-hidden">
   <div class="container">
     <div class="row align-items-center justify-content-center">
       <div class="col-lg-6 mb-5 mb-lg-0">
         <div class="block text-center text-lg-start pe-0 pe-xl-5">
-          <h1 class="text-capitalize mb-4">get a fastest loan with a smart way by seating at home</h1>
-          <p class="mb-4">We have collected the best offers of credit institutions and banks
-            <br>of Colombia. It remains to choose what suits you as fast as you.
-          </p>
+          <h1 class="text-capitalize mb-4" style="font-size:2.2rem;color:#0a406a;">{% trans 'Официальный сайт RDZ-SCIENCE, МЕЖДУНАРОДНЫЙ НАУЧНО-ТЕХНИЧЕСКИЙ ЖУРНАЛ.' %}</h1>
+
         </div>
       </div>
       <div class="col-lg-6">
@@ -67,94 +66,40 @@
     </svg>
   </div>
 </section>
-
+ 
 <section class="section">
   <div class="container">
+    <p class="text-primary text-uppercase fw-bold mb-3">{% trans 'Оформление' %}</p>
+    <h1>{% trans 'Требования к оформлению статьи' %} </h1>
+    <br>
     <div class="row">
-      <div class="col-lg-4 col-md-6">
-        <div class="section-title pt-4">
-          <p class="text-primary text-uppercase fw-bold mb-3">Our Services</p>
-          <h1>Our online and offline services</h1>
-          <p>Lorem ipsum dolor sit amet, consectetur adipreiscing elit. Lacus penatibus tincidunt</p>
-        </div>
-      </div>
+      {% for req in reqs %}
       <div class="col-lg-4 col-md-6 service-item">
-        <a class="text-black" href="service-details.html">
-          <div class="block"> <span class="colored-box text-center h3 mb-4">01</span>
-            <h3 class="mb-3 service-title">Personal loans</h3>
-            <p class="mb-0 service-description">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
-              eirmod</p>
+        <a class="text-black" href="{% url 'about_article' id=req.id %}">
+          <div class="block"> <span class="colored-box text-center h3 mb-4">{{ forloop.counter|add:'00' }}</span>
+            <h5 class="mb-3 service-title">{{ req.name_article }}</h5>
+            <p class="mb-0 service-description text-success">{% trans 'Подробнее' %}</p>
           </div>
         </a>
       </div>
-      <div class="col-lg-4 col-md-6 service-item">
-        <a class="text-black" href="service-details.html">
-          <div class="block"> <span class="colored-box text-center h3 mb-4">02</span>
-            <h3 class="mb-3 service-title">Home Equity Loans</h3>
-            <p class="mb-0 service-description">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
-              eirmod</p>
-          </div>
-        </a>
-      </div>
-      <div class="col-lg-4 col-md-6 service-item">
-        <a class="text-black" href="service-details.html">
-          <div class="block"> <span class="colored-box text-center h3 mb-4">
-
-
-              03
-
-            </span>
-            <h3 class="mb-3 service-title">Student Loans</h3>
-            <p class="mb-0 service-description">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
-              eirmod</p>
-          </div>
-        </a>
-      </div>
-      <div class="col-lg-4 col-md-6 service-item">
-        <a class="text-black" href="service-details.html">
-          <div class="block"> <span class="colored-box text-center h3 mb-4">
-
-
-              04
-
-            </span>
-            <h3 class="mb-3 service-title">Mortgage Loans</h3>
-            <p class="mb-0 service-description">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
-              eirmod</p>
-          </div>
-        </a>
-      </div>
-      <div class="col-lg-4 col-md-6 service-item">
-        <a class="text-black" href="service-details.html">
-          <div class="block"> <span class="colored-box text-center h3 mb-4">
-
-
-              05
-
-            </span>
-            <h3 class="mb-3 service-title">Payday Loans</h3>
-            <p class="mb-0 service-description">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
-              eirmod</p>
-          </div>
-        </a>
-      </div>
+      {% endfor %}
     </div>
   </div>
 </section>
 
-<section class="about-section section bg-tertiary position-relative overflow-hidden">
+<section class="about-section section bg-tertiary position-relative overflow-hidden" id="ab">
   <div class="container">
     <div class="row align-items-center">
       <div class="col-lg-5">
         <div class="section-title">
-          <p class="text-primary text-uppercase fw-bold mb-3">About Ourselves</p>
-          <h1>Fast Funding &amp; A Flexible Payment</h1>
+          <p class="text-primary text-uppercase fw-bold mb-3">{% trans 'О нас' %}</p>
+          <h3>{% trans '"МЕЖДУНАРОДНЫЙ ЖУРНАЛ НАУКИ И ТЕХНОЛОГИИ" международный научный журнал' %}
+             </h3>
           <p class="lead mb-0 mt-4">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Consv allis quam aliquet integer eget magna
-            ullam corper intesager vulutate aenean nunc quis a urna morbi id vitae. Vulpuate nisl</p>
-          <p>sed morbi sit ut placerat eges aeftas et. Pellen tesque tristisque magnis augue gravida pulvinar
-            placerat. Tellus massa pretra scelerisque leo. In volutpat arcu nunc nisl et, viverra faucisfbus</p>
-          </p> <a class="btn btn-primary mt-4" href="about.html">Know About Us</a>
+          <p>{% trans 'Закон Республики Узбекистан «О науке и научной деятельности», задачи, предусмотренные Указом Президента Республики Узбекистан № ПФ-6097 от 29 октября 2020 года, в том числе «Наука до 2030 года» Международный научный журнал «МЕЖДУНАРОДНЫЙ ЖУРНАЛ НАУКИ И ТЕХНОЛОГИИ», созданный в целях обеспечения реализации «концепции развития», объявляет о приеме статей в 1-й номер за 2023 год. Этот журнал индексируется в авторитетных базах данных и издается в электронном виде.' %}
+          </p>
+          
+          </p>  
         </div>
       </div>
       <div class="col-lg-7 text-center text-lg-end">
@@ -202,152 +147,383 @@
     <div class="row align-items-center justify-content-between">
       <div class="col-lg-5">
         <div class="section-title">
-          <p class="text-primary text-uppercase fw-bold mb-3">Difference Of Us</p>
-          <h1>What Makes Us <br> Different Form Other?</h1>
-          <div class="content mb-0 mt-4">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Consv allis quam aliquet integer eget magna
-              ullam corper intesager peent esque urna. Ac eu fringilla intea dger egadv estas ut. Sed vulutate aenean
-              nunc quis a urna morbi id vitae. Vulpuate nisl</p>
-            <p>sed morbi sit ut placerat eges aeftas et. Pellen tesque tristisque magnis augue gravida pulvinar
-              placerat. Tellus massa pretra scelerisque leo. In volutpat arcu nunc nisl et, viverra faucisfbus egestas.
-              In habitasse sagittis, convallis ut commodo amet, odio sagittis. Maecenas massa turpis duis felis, massa.
-              Morbi feugiat.</p>
-          </div>
+          <p class="text-primary text-uppercase fw-bold mb-3">{% trans 'Наши направления' %}</p>
+          <h3>{% trans '«МЕЖДУНАРОДНЫЙ ЖУРНАЛ НАУКИ И ТЕХНОЛОГИИ» принимает статьи по следующим направлениям:' %}</h3>
+        
         </div>
       </div>
+
       <div class="col-lg-6">
-        <div class="difference-of-us-item p-3 rounded mr-0 me-lg-4">
+     <div class="row">
+       <div class="col">
+
+        <div class="difference-of-us-item p-3 rounded mr-0 me-lg-4 ">
           <div class="d-block d-sm-flex align-items-center m-2">
-            <div class="icon me-4 mb-4 mb-sm-0"> <i class="fas fa-shield-alt mt-4" style="font-size:36px"></i>
+            <div class="  me-4 mb-4 mb-sm-0">  
             </div>
             <div class="block">
-              <h3 class="mb-3">Fast And Secure Process</h3>
-              <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing. Portaa nulla congue sed aliquam id
-                adipiscing auue</p>
+              <h3 class="mb-3">{% trans 'Точные и естественные науки' %}</h3>
+             
             </div>
           </div>
         </div>
-        <div class="difference-of-us-item p-3 rounded mr-0 me-lg-4">
+
+        <div class="difference-of-us-item p-3 rounded mr-0 me-lg-4 ">
           <div class="d-block d-sm-flex align-items-center m-2">
-            <div class="icon me-4 mb-4 mb-sm-0"> <i class="fas fa-blender-phone mt-4" style="font-size:36px"></i>
+            <div class="  me-4 mb-4 mb-sm-0">  
             </div>
             <div class="block">
-              <h3 class="mb-3">Quick Question Answers</h3>
-              <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing. Portaa nulla congue sed aliquam id
-                adipiscing auue</p>
+              <h3 class="mb-3">{% trans 'Медицинские науки' %}</h3>
+              
             </div>
           </div>
         </div>
+
         <div class="difference-of-us-item p-3 rounded mr-0 me-lg-4">
           <div class="d-block d-sm-flex align-items-center m-2">
-            <div class="icon me-4 mb-4 mb-sm-0"> <i class="fas fa-money-bill-alt mt-4" style="font-size:36px"></i>
+            <div class="  me-4 mb-4 mb-sm-0">  
             </div>
             <div class="block">
-              <h3 class="mb-3">We Get You Your Cash Quick</h3>
-              <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing. Portaa nulla congue sed aliquam id
-                adipiscing auue</p>
+              
+              <h3 class="mb-3">{% trans 'Технические науки' %}</h3>
             </div>
           </div>
         </div>
+  
+    
+  
+        <div class="difference-of-us-item p-3 rounded mr-0 me-lg-4">
+          <div class="d-block d-sm-flex align-items-center m-2">
+            <div class="  me-4 mb-4 mb-sm-0">  
+            </div>
+            <div class="block">
+              
+              <h3 class="mb-3">{% trans 'Педагогические науки' %} </h3>
+            </div>
+          </div>
+        </div>
+
+        <div class="difference-of-us-item p-3 rounded mr-0 me-lg-4">
+          <div class="d-block d-sm-flex align-items-center m-2">
+            <div class="  me-4 mb-4 mb-sm-0">  
+            </div>
+            <div class="block">
+              
+              <h3 class="mb-3">{% trans 'Социальные и гуманитарные науки' %}</h3>
+            </div>
+          </div>
+        </div>
+
+        </div>
+        <div class="col">
+
+        <div class="difference-of-us-item p-3 rounded mr-0 me-lg-4">
+          <div class="d-block d-sm-flex align-items-center m-2">
+            <div class="  me-4 mb-4 mb-sm-0">  
+            </div>
+            <div class="block">
+              
+              <h3 class="mb-3">{% trans 'экономика' %}</h3>
+            </div>
+          </div>
+        </div>
+ 
+        <div class="difference-of-us-item p-3 rounded mr-0 me-lg-4">
+          <div class="d-block d-sm-flex align-items-center m-2">
+            <div class="  me-4 mb-4 mb-sm-0">  
+            </div>
+            <div class="block">
+              
+              <h3 class="mb-3">{% trans 'Науки философии и филологии' %}</h3>
+            </div>
+          </div>
+        </div>
+
+        <div class="difference-of-us-item p-3 rounded mr-0 me-lg-4">
+          <div class="d-block d-sm-flex align-items-center m-2">
+            <div class="  me-4 mb-4 mb-sm-0">  
+            </div>
+            <div class="block">
+              
+              <h3 class="mb-3">{% trans 'Искусство и культурология' %}</h3>
+            </div>
+          </div>
+        </div>
+
+        <div class="difference-of-us-item p-3 rounded mr-0 me-lg-4">
+          <div class="d-block d-sm-flex align-items-center m-2">
+            <div class="  me-4 mb-4 mb-sm-0">  
+            </div>
+            <div class="block">
+              
+              <h3 class="mb-3">{% trans 'Физкультура и спорт' %}</h3>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="homepage_tab position-relative">
+<section class="homepage_tab position-relative" id="team">
   <div class="section container">
     <div class="row justify-content-center">
       <div class="col-lg-8 mb-4">
         <div class="section-title text-center">
-          <p class="text-primary text-uppercase fw-bold mb-3">Difference Of Us</p>
-          <h1>Get Know The Basics Simple Pricing And Payments</h1>
+          <p class="text-primary text-uppercase fw-bold mb-3">{% trans 'Команда' %}</p>
+          <h1>{% trans 'Наши сотрудники' %}</h1>
         </div>
       </div>
       <div class="col-lg-10">
         <ul class="payment_info_tab nav nav-pills justify-content-center mb-4" id="pills-tab" role="tablist">
-          <li class="nav-item m-2" role="presentation"> <a
-              class="nav-link btn btn-outline-primary effect-none text-dark active" id="pills-how-much-can-i-recive-tab"
-              data-bs-toggle="pill" href="#pills-how-much-can-i-recive" role="tab"
-              aria-controls="pills-how-much-can-i-recive" aria-selected="true">How Much Can I Recive?</a>
+
+
+          <li class="nav-item m-2" role="presentation"> 
+            <a class="nav-link btn btn-outline-primary effect-none text-dark active" id="pills-how-much-can-i-recive-tab"
+             data-bs-toggle="pill" href="#pills-how-much-can-i-recive" role="tab"
+              aria-controls="pills-how-much-can-i-recive" aria-selected="true">Sherdanov Chori Tangriyevich</a>
           </li>
-          <li class="nav-item m-2" role="presentation"> <a
-              class="nav-link btn btn-outline-primary effect-none text-dark " id="pills-how-much-does-it-costs-tab"
-              data-bs-toggle="pill" href="#pills-how-much-does-it-costs" role="tab"
-              aria-controls="pills-how-much-does-it-costs" aria-selected="true">How Much Does It Costs?</a>
+
+
+            <li class="nav-item m-2" role="presentation"> 
+            <a class="nav-link btn btn-outline-primary effect-none text-dark " id="pills-how-much-does-it-costs-tab"
+            data-bs-toggle="pill" 
+            href="#pills-how-much-does-it-costs" role="tab"
+            aria-controls="pills-how-much-does-it-costs" aria-selected="true">Salayeva Muborak Saburovna</a>
           </li>
+
+
+
           <li class="nav-item m-2" role="presentation"> <a
               class="nav-link btn btn-outline-primary effect-none text-dark " id="pills-how-do-i-repay-tab"
               data-bs-toggle="pill" href="#pills-how-do-i-repay" role="tab" aria-controls="pills-how-do-i-repay"
-              aria-selected="true">How Do I Repay?</a>
+              aria-selected="true">Orlova  Tatyana  Alekseyevna</a>
           </li>
+
+
+
+          <li class="nav-item m-2" role="presentation"> <a
+              class="nav-link btn btn-outline-primary effect-none text-dark " id="pills-how-do-i-repay-tab"
+              data-bs-toggle="pill" href="#pills-how-do-i-photo1" role="tab" aria-controls="pills-how-do-i-repay"
+              aria-selected="true">Kalandarov Ergash Kilichovich</a>
+          </li>
+
+
+
+          <li class="nav-item m-2" role="presentation"> <a
+              class="nav-link btn btn-outline-primary effect-none text-dark " id="pills-how-do-i-repay-tab"
+              data-bs-toggle="pill" href="#pills-how-do-i-photo2" role="tab" aria-controls="pills-how-do-i-repay"
+              aria-selected="true">Dexkanova Ma’mura Ulmasovna</a>
+          </li>
+
+
+
+          <li class="nav-item m-2" role="presentation"> <a
+              class="nav-link btn btn-outline-primary effect-none text-dark " id="pills-how-do-i-repay-tab"
+              data-bs-toggle="pill" href="#pills-how-do-i-photo3" role="tab" aria-controls="pills-how-do-i-repay"
+              aria-selected="true">Muslimova Yulduz Choriyevna</a>
+          </li>
+
+
+
+          <li class="nav-item m-2" role="presentation"> <a
+              class="nav-link btn btn-outline-primary effect-none text-dark " id="pills-how-do-i-repay-tab"
+              data-bs-toggle="pill" href="#pills-how-do-i-photo4" role="tab" aria-controls="pills-how-do-i-repay"
+              aria-selected="true">Toshpulatova Shaxlo Ochilovna</a>
+          </li>
+
+          <li class="nav-item m-2" role="presentation"> <a
+            class="nav-link btn btn-outline-primary effect-none text-dark " id="pills-how-do-i-repay-tab"
+            data-bs-toggle="pill" href="#pills-how-do-i-photo5" role="tab" aria-controls="pills-how-do-i-repay"
+            aria-selected="true">Xudoyberdiyev Eliboy Norboyevich</a>
+        </li>
+
+
         </ul>
         <div class="rounded shadow bg-white p-5 tab-content" id="pills-tabContent">
+
+
           <div class="tab-pane fade show active" id="pills-how-much-can-i-recive" role="tabpanel"
             aria-labelledby="pills-how-much-can-i-recive-tab">
             <div class="row align-items-center">
               <div class="col-md-6 order-1 order-md-0">
                 <div class="content-block">
-                  <h3 class="mb-4">How Much Can I Recive?</h3>
+                   
                   <div class="content">
-                    <p>Lorem ipsum dolor sit amet, consec tetasssur adipiscing elit. Tellus integer proin nisl pretium,
-                      vestibulum dictum blandit risus. Nisl commodo</p>
-                    <p>turpis vivamus donec. Id congue vesti bualum odio dignissim at quisque viverra. Non semper in sed
-                      quisque dui. Platea posuere ullamcorper id fames ut sed urna cursus eget. Neque, vel</p>
+                    <p>{% trans 'Старший научный сотрудник Института астрономии РАН. Кандидат физико-математических наук. Член редколлегии Международного научно-технического журнала общества «РДЗ-НАУКА».' %}</p>
                   </div>
                 </div>
               </div>
               <div class="col-md-6 order-0 order-md-1 mb-5 mt-md-0">
                 <div class="image-block text-center">
-                  <img loading="lazy" decoding="async" src="{% static 'images/payment-info.png' %}"
+                  <img loading="lazy" decoding="async" src="{% static 'photo1.jpg' %}"
                     alt="How Much Can I Recive?" class="img-fluid">
                 </div>
               </div>
             </div>
           </div>
+
+
+
+
           <div class="tab-pane fade " id="pills-how-much-does-it-costs" role="tabpanel"
             aria-labelledby="pills-how-much-does-it-costs-tab">
             <div class="row align-items-center">
               <div class="col-md-6 order-1 order-md-0">
                 <div class="content-block">
-                  <h3 class="mb-4">How Much Does It Costs?</h3>
+                   
                   <div class="content">
-                    <p>Lorem ipsum dolor sit amet, consec tetasssur adipiscing elit. Tellus integer proin nisl pretium,
-                      vestibulum dictum blandit risus. Nisl commodo</p>
-                    <p>turpis vivamus donec. Id congue vesti bualum odio dignissim at quisque viverra. Non semper in sed
-                      quisque dui. Platea posuere ullamcorper id fames ut sed urna cursus eget. Neque, vel</p>
+                    <p>{% trans 'Низомий Ташкентский государственный педагогический университет «Профессор кафедры педагогики начального образования, кандидат психологических наук. Член редколлегии международного научного журнала «Internationale Journal of Science and Technology» общества «РДЗ-НАУКА».' %}</p>
+                  
                   </div>
                 </div>
               </div>
               <div class="col-md-6 order-0 order-md-1 mb-5 mt-md-0">
                 <div class="image-block text-center">
-                  <img loading="lazy" decoding="async" src="{% static 'images/illustration-2.png' %}"
+                  <img loading="lazy" decoding="async" width="236 "  src="{% static 'photo2.jpg' %}"
                     alt="How Much Does It Costs?" class="img-fluid">
                 </div>
               </div>
             </div>
           </div>
+
+
+
+
           <div class="tab-pane fade " id="pills-how-do-i-repay" role="tabpanel"
             aria-labelledby="pills-how-do-i-repay-tab">
             <div class="row align-items-center">
               <div class="col-md-6 order-1 order-md-0">
                 <div class="content-block">
-                  <h3 class="mb-4">How Do I Repay?</h3>
+             
                   <div class="content">
-                    <p>Lorem ipsum dolor sit amet, consec tetasssur adipiscing elit. Tellus integer proin nisl pretium,
-                      vestibulum dictum blandit risus. Nisl commodo</p>
-                    <p>turpis vivamus donec. Id congue vesti bualum odio dignissim at quisque viverra. Non semper in sed
-                      quisque dui. Platea posuere ullamcorper id fames ut sed urna cursus eget. Neque, vel</p>
+                    <p>{% trans 'Доцент кафедры физики и методики преподавания Ташкентского государственного педагогического университета им. Низоми, кандидат педагогических наук, член редколлегии Международного журнала науки и техники.' %}</p>
+                
                   </div>
                 </div>
               </div>
               <div class="col-md-6 order-0 order-md-1 mb-5 mt-md-0">
                 <div class="image-block text-center">
-                  <img loading="lazy" decoding="async" src="{% static 'images/illustration-1.png' %}"
+                  <img loading="lazy" decoding="async" width="236" src="{% static 'photo3.jpg' %}"
                     alt="How Do I Repay?" class="img-fluid">
                 </div>
               </div>
             </div>
           </div>
+
+          <div class="tab-pane fade " id="pills-how-do-i-photo1" role="tabpanel"
+          aria-labelledby="pills-how-do-i-repay-tab">
+          <div class="row align-items-center">
+            <div class="col-md-6 order-1 order-md-0">
+              <div class="content-block">
+           
+                <div class="content">
+                  <p>{% trans 'Кандидат физико-математических наук, Доцент Ташкентского государственного педагогического университета имени Низоми, член редколлегии Международного научно-технического журнала общества «РДЗ-НАУКА».' %}</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 order-0 order-md-1 mb-5 mt-md-0">
+              <div class="image-block text-center">
+                <img loading="lazy" decoding="async" width="236" src="{% static 'photo4.jpg' %}"
+                  alt="How Do I Repay?" class="img-fluid">
+              </div>
+            </div>
+          </div>
+        </div>
+          
+
+        <div class="tab-pane fade " id="pills-how-do-i-photo2" role="tabpanel"
+        aria-labelledby="pills-how-do-i-repay-tab">
+        <div class="row align-items-center">
+          <div class="col-md-6 order-1 order-md-0">
+            <div class="content-block">
+         
+              <div class="content">
+                <p>{% trans 'Ташкентский государственный педагогический университет имени Низоми Профессор кафедры «Педагогика начального образования», член редколлегии «Международного научно-технического журнала» общества «РДЗ-НАУКА».' %}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 order-0 order-md-1 mb-5 mt-md-0">
+            <div class="image-block text-center">
+              <img loading="lazy" decoding="async" width="236" src="{% static 'photo5.jpg' %}"
+                alt="How Do I Repay?" class="img-fluid">
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="tab-pane fade " id="pills-how-do-i-photo3" role="tabpanel"
+        aria-labelledby="pills-how-do-i-repay-tab">
+        <div class="row align-items-center">
+          <div class="col-md-6 order-1 order-md-0">
+            <div class="content-block">
+         
+              <div class="content">
+                <p>{% trans 'Кандидат физико-математических наук, Ташкентский государственный педагогический университет, доцент кафедры физики и методики ее преподавания, член редколлегии Международного научно-технического журнала общества «РДЗ-НАУКА»' %}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 order-0 order-md-1 mb-5 mt-md-0">
+            <div class="image-block text-center">
+              <img loading="lazy" decoding="async" width="236" src="{% static 'photo6.jpg' %}"
+                alt="How Do I Repay?" class="img-fluid">
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+      <div class="tab-pane fade " id="pills-how-do-i-photo4" role="tabpanel"
+        aria-labelledby="pills-how-do-i-repay-tab">
+        <div class="row align-items-center">
+          <div class="col-md-6 order-1 order-md-0">
+            <div class="content-block">
+         
+              <div class="content">
+                <p>{% trans 'Доцент кафедры физики и методики ее преподавания физико-математического факультета ТДПУ. Доктор философских наук (PhD) в области педагогических наук, член редколлегии международного научного журнала «Internationale Journal of Science and Technology» общества «РДЗ-НАУКА».' %}</p>
+            
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 order-0 order-md-1 mb-5 mt-md-0">
+            <div class="image-block text-center">
+              <img loading="lazy" decoding="async" width="236" src="{% static 'photo7.jpg' %}"
+                alt="How Do I Repay?" class="img-fluid">
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+      
+      <div class="tab-pane fade " id="pills-how-do-i-photo5" role="tabpanel"
+        aria-labelledby="pills-how-do-i-repay-tab">
+        <div class="row align-items-center">
+          <div class="col-md-6 order-1 order-md-0">
+            <div class="content-block">
+         
+              <div class="content">
+                <p>{% trans 'Адъюнкт-профессор методики преподавания физики и астрономии в Университете Найроби, доктор философии по физике и математике Член редакционной коллегии Международного журнала науки и техники RDZ-SCIENCE' %}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 order-0 order-md-1 mb-5 mt-md-0">
+            <div class="image-block text-center">
+              <img loading="lazy" decoding="async" width="236" src="{% static 'photo8.jpg' %}"
+                alt="How Do I Repay?" class="img-fluid">
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
         </div>
       </div>
     </div>
@@ -394,8 +570,8 @@
     <div class="row justify-content-center">
       <div class="col-lg-6">
         <div class="section-title text-center">
-          <p class="text-primary text-uppercase fw-bold mb-3">Интересные новости</p>
-          <h1 class="mb-4">Популярные статьи</h1>
+          <p class="text-primary text-uppercase fw-bold mb-3">{% trans 'Интересные новости' %}</p>
+          <h1 class="mb-4">{% trans 'Популярные статьи' %}</h1>
 
         </div>
       </div>
@@ -428,20 +604,20 @@
                 </div>
                 <div class="pt-4">
                   <p class="mb-3">{{ blog.created_at | date:'d M Y' }}</p>
-                  <p class="mb-3"> <img src="{% static 'eye.png' %}" width="25" alt=""> Просмотров: {{ blog.views_count }} </p>
+                  <p class="mb-3"> <img src="{% static 'eye.png' %}" width="25" alt="">{% trans 'Просмотров:' %} {{ blog.views_count }} </p>
                   <h2 class="h4"><a class="text-black" style="word-break: break-all;"
                       href="{% url 'blog_detail' pk=blog.pk %}">{{blog.title |truncatechars:50 }}</a></h2>
-                  <p style="white-space: pre-wrap; word-break: break-all;">{{blog.description|truncatechars:100 }}
+                  <p style="white-space: pre-wrap; word-break: break-all;">{{ blog.description | bleach_clean:50 | safe }}</p>
                   </p>
                   <a href="{% url 'blog_detail' pk=blog.pk %}" class="btn btn-outline-primary fw-bold"
-                    aria-label="Read the full article by clicking here">Подробнее</a>
+                    aria-label="Read the full article by clicking here">{% trans 'Подробнее' %}</a>
                 </div>
               </article>
             </div>
             {% endfor %}
 
             {% else %}
-            <h1>Временно постов нет... </h1>
+            <h1>{% trans 'Временно постов нет... ' %} </h1>
             {% endif %}
 
           </div>
@@ -489,13 +665,13 @@
 
 </section>
 
-<section class="section">
+<section class="section" id="con">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-12">
         <div class="section-title text-center mb-5 pb-2">
-          <p class="text-primary text-uppercase fw-bold mb-3">Questions You Have</p>
-          <h1>Frequently Asked Questions</h1>
+          <p class="text-primary text-uppercase fw-bold mb-3">{% trans 'Ответы на вопросы' %}</p>
+          <h1>{% trans 'Часто задаваемые вопросы' %}</h1>
         </div>
       </div>
       <div class="col-lg-6">
@@ -504,104 +680,85 @@
             <h2 class="accordion-header accordion-button h5 border-0 active"
               id="heading-ebd23e34fd2ed58299b32c03c521feb0b02f19d9" type="button" data-bs-toggle="collapse"
               data-bs-target="#collapse-ebd23e34fd2ed58299b32c03c521feb0b02f19d9" aria-expanded="true"
-              aria-controls="collapse-ebd23e34fd2ed58299b32c03c521feb0b02f19d9">Can I apply if my credit isn&rsquo;t
-              perfect?
+              aria-controls="collapse-ebd23e34fd2ed58299b32c03c521feb0b02f19d9">{% trans 'Статья должна быть написана в формате IMRAD международного уровня' %}
             </h2>
             <div id="collapse-ebd23e34fd2ed58299b32c03c521feb0b02f19d9"
               class="accordion-collapse collapse border-0 show"
               aria-labelledby="heading-ebd23e34fd2ed58299b32c03c521feb0b02f19d9" data-bs-parent="#accordionFAQ">
-              <div class="accordion-body py-0 content">The difference between and premium product consist number of
-                components, plugins, page in each. The Free versions contain only a few elements and pages that.</div>
+              <div class="accordion-body py-0 content">{% trans 'Название статьи, аннотация и ключевые слова должны быть представлены на узбекском, русском и английском языках. ' %}</div>
             </div>
           </div>
           <div class="accordion-item p-1 mb-2">
             <h2 class="accordion-header accordion-button h5 border-0 "
               id="heading-a443e01b4db47b3f4a1267e10594576d52730ec1" type="button" data-bs-toggle="collapse"
               data-bs-target="#collapse-a443e01b4db47b3f4a1267e10594576d52730ec1" aria-expanded="false"
-              aria-controls="collapse-a443e01b4db47b3f4a1267e10594576d52730ec1">How do I know that I have been
-              approved?
+              aria-controls="collapse-a443e01b4db47b3f4a1267e10594576d52730ec1">{% trans 'Статьи должны быть представлены на актуальные темы, относящиеся к направлению научного журнала' %}
             </h2>
             <div id="collapse-a443e01b4db47b3f4a1267e10594576d52730ec1" class="accordion-collapse collapse border-0 "
               aria-labelledby="heading-a443e01b4db47b3f4a1267e10594576d52730ec1" data-bs-parent="#accordionFAQ">
-              <div class="accordion-body py-0 content">The difference between and premium product consist number of
-                components, plugins, page in each. The Free versions contain only a few elements and pages that.</div>
+              <div class="accordion-body py-0 content">{% trans 'основанные на научных и законченных мнениях, с предложениями и рекомендациями;' %}</div>
             </div>
           </div>
           <div class="accordion-item p-1 mb-2">
             <h2 class="accordion-header accordion-button h5 border-0 "
               id="heading-4b82be4be873c8ad699fa97049523ac86b67a8bd" type="button" data-bs-toggle="collapse"
               data-bs-target="#collapse-4b82be4be873c8ad699fa97049523ac86b67a8bd" aria-expanded="false"
-              aria-controls="collapse-4b82be4be873c8ad699fa97049523ac86b67a8bd">Do I need to fax or email any
-              documents?
-            </h2>
+              aria-controls="collapse-4b82be4be873c8ad699fa97049523ac86b67a8bd">{% trans 'Текст статьи должен быть в формате А4 ' %}            </h2>
             <div id="collapse-4b82be4be873c8ad699fa97049523ac86b67a8bd" class="accordion-collapse collapse border-0 "
               aria-labelledby="heading-4b82be4be873c8ad699fa97049523ac86b67a8bd" data-bs-parent="#accordionFAQ">
-              <div class="accordion-body py-0 content">The difference between and premium product consist number of
-                components, plugins, page in each. The Free versions contain only a few elements and pages that.</div>
+              <div class="accordion-body py-0 content">{% trans 'с полями 2 см сверху и снизу, 2 см слева, 2 см справа;' %}</div>
             </div>
           </div>
           <div class="accordion-item p-1 mb-2">
             <h2 class="accordion-header accordion-button h5 border-0 "
               id="heading-3e13e9676a9cd6a6f8bfbe6e1e9fc0881ef247b3" type="button" data-bs-toggle="collapse"
               data-bs-target="#collapse-3e13e9676a9cd6a6f8bfbe6e1e9fc0881ef247b3" aria-expanded="false"
-              aria-controls="collapse-3e13e9676a9cd6a6f8bfbe6e1e9fc0881ef247b3">Do you provide loans to military
-              personnel?
+              aria-controls="collapse-3e13e9676a9cd6a6f8bfbe6e1e9fc0881ef247b3">{% trans 'Текст статьи должен быть в текстовом редакторе Word, шрифт Times New Roman' %}
             </h2>
             <div id="collapse-3e13e9676a9cd6a6f8bfbe6e1e9fc0881ef247b3" class="accordion-collapse collapse border-0 "
               aria-labelledby="heading-3e13e9676a9cd6a6f8bfbe6e1e9fc0881ef247b3" data-bs-parent="#accordionFAQ">
-              <div class="accordion-body py-0 content">The difference between and premium product consist number of
-                components, plugins, page in each. The Free versions contain only a few elements and pages that.</div>
+              <div class="accordion-body py-0 content"> {% trans 'размер 14, интервал 1,15, объем 3-10 страниц' %}</div>
             </div>
           </div>
           <div class="accordion-item p-1 mb-2">
             <h2 class="accordion-header accordion-button h5 border-0 "
               id="heading-0c2f829793a1f0562fea97120357dd2d43319164" type="button" data-bs-toggle="collapse"
               data-bs-target="#collapse-0c2f829793a1f0562fea97120357dd2d43319164" aria-expanded="false"
-              aria-controls="collapse-0c2f829793a1f0562fea97120357dd2d43319164">Can I remove footer credit purchase ?
+              aria-controls="collapse-0c2f829793a1f0562fea97120357dd2d43319164">{% trans 'При принятии представленной статьи взимается вознаграждение' %}
             </h2>
             <div id="collapse-0c2f829793a1f0562fea97120357dd2d43319164" class="accordion-collapse collapse border-0 "
               aria-labelledby="heading-0c2f829793a1f0562fea97120357dd2d43319164" data-bs-parent="#accordionFAQ">
-              <div class="accordion-body py-0 content">The difference between and premium product consist number of
-                components, plugins, page in each. The Free versions contain only a few elements and pages that.</div>
+              <div class="accordion-body py-0 content">150 000 {% trans 'сум за статью.' %}</div>
             </div>
           </div>
-          <div class="accordion-item p-1 mb-2">
-            <h2 class="accordion-header accordion-button h5 border-0 "
-              id="heading-8fe6730e26db16f15763887c30a614caa075f518" type="button" data-bs-toggle="collapse"
-              data-bs-target="#collapse-8fe6730e26db16f15763887c30a614caa075f518" aria-expanded="false"
-              aria-controls="collapse-8fe6730e26db16f15763887c30a614caa075f518">What is the difference the free
-              versions?
-            </h2>
-            <div id="collapse-8fe6730e26db16f15763887c30a614caa075f518" class="accordion-collapse collapse border-0 "
-              aria-labelledby="heading-8fe6730e26db16f15763887c30a614caa075f518" data-bs-parent="#accordionFAQ">
-              <div class="accordion-body py-0 content">The difference between and premium product consist number of
-                components, plugins, page in each. The Free versions contain only a few elements and pages that.</div>
-            </div>
-          </div>
+     
         </div>
       </div>
       <div class="col-lg-4 mt-4 mt-lg-0">
         <div class="shadow rounded py-5 px-4 ms-0 ms-lg-4 bg-white position-relative">
           <div class="block mx-0 mx-lg-3 mt-0">
-            <h4 class="h5">Still Have Questions?</h4>
-            <div class="content">Call Us We Will Be Happy To Help
-              <br> <a href="tel:+3301563965">+3301563965</a>
-              <br>Monday - Friday
-              <br>9AM TO 8PM Eastern Time
+             
+            <div class="content">{% trans 'Статьи на узбекском, русском и английском языках принимаются до 1 июля 2023 года в электронном виде по телеграм-адресу @IJST_2023. Контактный телефон:  ' %}
+              <br> <a href="tel:+998948053533">+998948053533</a>
+              <br> <a href="tel:++998903479831 ">+998903479831 </a>
+              <br>{% trans 'Коллекционная форма журнала - 3 июля 2023 г.' %}
+               
+              
+              <br>{% trans 'Он будет размещен в Telegram-канале' %} https://t.me/journal_IJST.
             </div>
           </div>
           <div class="block mx-0 mx-lg-3 mt-4">
-            <h4 class="h5">Canada Office</h4>
-            <div class="content">231 Ross Street.
-              <br>K7A 1C2.
-              <br>Smiths Falls
+          
+            <div class="content">{% trans 'Присланные научные статьи будут рассмотрены редакционной коллегией, а неотредактированные статьи, не присланные в соответствии с требованиями, опубликованы не будут;' %}
+ 
             </div>
           </div>
           <div class="block mx-0 mx-lg-3 mt-4">
-            <h4 class="h5">UK Office</h4>
-            <div class="content">57 Folkestone Road.
-              <br>AB54 5XQ,
-              <br>Winston
+         
+            <div class="content">{% trans 'Каждая статья индексируется в международных базах данных' %} Google Scholar,  
+              <br>Zenodo, ResearchBible {% trans '(база OAK 14). Каждой статье присваивается номер DOI.' %}
+             <br> <br>{% trans 'Присылать статьи в журнал могут профессора и преподаватели, докторанты, независимые исследователи, учителя общеобразовательных школ и академических лицеев, аспиранты, талантливые студенты и другие представители науки. Статьи, принятые в журнал, будут предоставлены автору в течение 3-х рабочих дней с БЕСПЛАТНЫМ сертификатом, письмом о принятии и авторским свидетельством.' %}
+             
             </div>
           </div>
         </div>
